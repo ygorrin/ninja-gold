@@ -2,13 +2,6 @@ from django.shortcuts import render, HttpResponse, redirect
 import random
 from time import localtime,strftime
 
-
-"""
-def randInt(min=0,max=100):
-    num = (random.random() * (max-min)+min)
-    return round(num)
-print(randInt(10,20))
-"""
 texto = []
 def index(request):
     if 'contador' in request.session:
@@ -17,7 +10,6 @@ def index(request):
         request.session['contador'] = 0
 
     context = {
-        "palabra" : 'palabra',
         "contador": request.session['contador'],
     }
     return render(request,'index.html', context)
@@ -27,34 +19,36 @@ def randInt(min=0,max=100):
     return round(num)
 
 def gettime():
-      time =strftime("%b %d, %Y, %H:%M %p", localtime())
-      return time
-
+    time =strftime("%b %d, %Y, %H:%M %p", localtime())
+    return time
 
 def process_money(request):
-    print("opcion:", request.POST['option'])
-    valor = int(request.POST['option'])
-    if valor == 1:
-        numero = randInt(10,20)
-        card = "Farm"
-    elif request.POST['option'] ==2:
-        print("Entré en la opcion 2")
-    elif request.POST['option'] ==3:
-        print("Entré en la opcion 3")
-    elif request.POST['option'] ==4:
-        print("Entré en la opcion 4")
+    if request.POST:
+        print("opcion:", request.POST['opcion'])
+        opcion = request.POST['opcion']
+        if opcion == "granja":
+            numero = randInt(10,20)
+        elif opcion == "cueva":
+            numero = randInt(5,10)
+        elif opcion == "casa":
+            numero = randInt(2,5)
+        elif opcion =="casino":
+            numero = randInt(-50,50)
 
     print("Valor Inicial: ",request.session['contador'])
     request.session['contador'] += numero
     if numero>=0:
-        textoadd = "Ganaste: " + str(numero) + " Gold desde la " + card+ "!  (" + gettime() + ")"
+        color = "blue"
+        textoadd = "Ganaste: " + str(numero) + " Gold desde la " + opcion + "!  (" + gettime() + ")"
     else: 
-        textoadd = "Perdiste: " + str(numero) + " Gold desde la " + card+ " Sorry!  (" + gettime() + ")"
+        color = "red"
+        textoadd = "Perdiste: " + str(numero) + " Gold desde la " + opcion + " Sorry!  (" + gettime() + ")"
     print("Random: ", numero , "Request: ", request.session['contador'], textoadd)
     texto.append(textoadd)
 
     context = {
         'contador':  request.session['contador'],
         'texto': texto,
+        'color' : color,
     }
     return render(request, 'index.html', context)
