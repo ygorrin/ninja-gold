@@ -9,39 +9,23 @@
     {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        main{
-            margin: 0 auto;
-            text-align: center;
-            padding-top: 10px;
-        }
-
-        main .cards {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            justify-content: center;
-            margin: 5px 20px;
-        }
-
-        main .cards>form {
-            margin: 5px 20px;
-        }
-
-        main .cards>form>div {
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/main.css'%}">
 </head>
 
 <body>
     <main>
-        <h1>Ninja Money</h1>
-        <h3>Cantidad de Oro: {{contador}}</h3>
-        <button class="btn btn-info">Reiniciar</button>
+        <h1>Ninja Money Yamila Gorrin&#169; </h1>
+
+        {% for log in request.session.logs%}
+            {% if forloop.last %}
+                <h3>Cantidad de Oro: {{log.contador}} </h3>
+            {% endif %}
+        {% endfor %}
+
+        <a href="/vaciar_datos/" class="btn btn-info btn-lg boton">Start</a><hr>
+
         <div class="cards">
-            <form action='process_money' method='post' class="card" style="width: 20%;">
+            <form action='/crear_datos/' method='post' class="card" style="width: 20%;">
                 {% csrf_token %}
                 <input type="hidden" name="opcion" value="granja">
                 <img src="{% static 'img/granja.jpg' %}" class="card-img-top" alt="...">
@@ -51,9 +35,9 @@
                     <button class="btn btn-primary" type="submit">Inténtalo</button>
                 </div>
             </form>
-            <form action='process_money' method='post' class="card" style="width: 20%;">
+            <form action='/crear_datos/' method='post' class="card" style="width: 20%;">
                 {% csrf_token %}
-                <input type="hidden" name="opcion" value="granja">
+                <input type="hidden" name="opcion" value="cueva">
                 <img src="{% static 'img/cueva.jpg' %}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Cueva</h5>
@@ -61,7 +45,7 @@
                     <button class="btn btn-primary" type="submit">Inténtalo</button>
                 </div>
             </form>
-            <form action='process_money' method='post' class="card" style="width: 20%;">
+            <form action='/crear_datos/' method='post' class="card" style="width: 20%;">
                 {% csrf_token %}
                 <input type="hidden" name="opcion" value="casa">
                 <img src="{% static 'img/casa.jpg' %}" class="card-img-top" alt="...">
@@ -71,7 +55,7 @@
                     <button class="btn btn-primary" type="submit">Inténtalo</button>
                 </div>
             </form>
-            <form action='process_money' method='post' class="card" style="width: 20%;">
+            <form action='/crear_datos/' method='post' class="card" style="width: 20%;">
                 {% csrf_token %}
                 <input type="hidden" name="opcion" value="casino">
                 <img src="{% static 'img/casino.jpg' %}" class="card-img-top" alt="...">
@@ -83,28 +67,20 @@
             </form>
         </div>
 
-        <div>
-            <h3>Actividades</h3>
+        <h3>Actividades</h3>
+        <div class="actividades">
             <ul>
-                {% for log in request.sections.context %}
-                  <li>
-                      <p color = "{{log.color}}"> </p>{{log.texto}}
-                  </li>
+                {% for log in request.session.logs reversed%}
+                    <li class="{{log.color}}">Juego #{{log.contador1}} {{log.texto}}, Record: {{log.contador}} </li>
                 {% endfor %}
             </ul>
-
-            </div>
-            {{texto}}
         </div>
-
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/index.js' %}"></script>
-
-
 </body>
 
 </html>

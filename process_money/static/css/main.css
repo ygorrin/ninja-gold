@@ -1,0 +1,55 @@
+main {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 10px;
+    background: url('../img/bg-desktop.jpg') no-repeat top center/cover;
+}
+
+ul,
+li {
+    text-align: left;
+}
+
+main .cards {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    margin: 5px 20px;
+}
+
+main .cards>form {
+    margin: 5px 20px;
+}
+
+main .cards>form>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.actividades {
+    border: 1px dotted blueviolet;
+    width: 60vw;
+    height: 120px;
+    overflow-y: scroll;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.boton {
+    width: 200px;
+    border-radius: 30px;
+    background-color: #1E1C37;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.rojo {
+    color: red;
+}
+
+.azul {
+    color: blueviolet;
+}
